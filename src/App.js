@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import './components/GameList'
+import GameList from './components/GameList';
+import GameForm from './components/GameForm';
 
-function App() {
+class App extends Component{
+
+  constructor(){
+    super();
+    
+    this.state = {
+      owner: "Kevin",
+      games: [
+        {id: 1, name: "Super Mario", type: "Arcade", price: "30000"},
+        {id: 2, name: "Call of Duty", type: "FPS", price: "100000"},
+        {id: 3, name: "Halo", type: "FPS", price: "50000"}
+      ]
+    }
+  }
+
+  handleAddGame(game){
+    let games = this.state.games;
+    games.push(game);
+    this.setState({
+        games: games
+    })
+}
+
+
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <GameList games={this.state.games} owner={this.state.owner}/>
+      <GameForm onSubmit={this.handleAddGame.bind(this)} />
     </div>
   );
+}
 }
 
 export default App;
